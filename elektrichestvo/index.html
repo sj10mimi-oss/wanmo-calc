@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WANMO — калькулятор расхода электроэнергии</title>
+<meta name="description" content="Сколько стоит электричество для чиллера ледяной ванны WANMO в час, сутки и месяц.">
+<style>html,body{margin:0;background:#e9eef2}</style>
+</head>
+<body>
+
+<div class="wm" id="wm-power">
+<style>
+  .wm{
+    --ground:#e9eef2;--surface:#fff;--surface-2:#f4f7f9;
+    --ink:#0b1115;--ink-2:#2b3a43;--muted:#5c6c77;
+    --hair:#c8d5dd;--hair-soft:#dde6eb;
+    --accent:#0e6a86;--accent-ink:#fff;
+    --radius:14px;
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Roboto,Arial,sans-serif;
+    font-size:16px;line-height:1.6;color:var(--ink);background:var(--ground);
+    padding:clamp(1.5rem,5vw,3.5rem) 16px;text-align:left;
+    -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+  }
+  .wm *,.wm *::before,.wm *::after{box-sizing:border-box}
+  .wm h1,.wm p{margin:0}
+  .wm-in{max-width:1080px;margin:0 auto}
+
+  .wm-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:clamp(1.5rem,4vw,2.5rem)}
+  .wm-mark{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:1.0625rem;color:var(--ink);text-decoration:none}
+  .wm-site{font-size:.875rem;color:var(--muted);text-decoration:none}
+  .wm-eyebrow{font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+  .wm-head{display:flex;flex-direction:column;gap:.7rem;margin-bottom:clamp(1.5rem,3vw,2.25rem)}
+  .wm-head h1{font-size:clamp(1.6rem,1.15rem + 1.6vw,2.375rem);font-weight:700;line-height:1.12;letter-spacing:-.015em;text-wrap:balance;color:var(--ink)}
+  .wm-head p{color:var(--muted);max-width:66ch}
+
+  .wm-power{display:grid;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--radius);overflow:hidden;grid-template-columns:1fr}
+  @media (min-width:880px){.wm-power{grid-template-columns:1fr minmax(0,360px)}}
+  .wm-ptable{background:var(--surface);padding:1.5rem}
+  .wm-pside{background:var(--surface-2);padding:1.5rem;display:flex;flex-direction:column;gap:1rem}
+  .wm-pside p{font-size:.9375rem;color:var(--ink-2)}
+  .wm-pside strong{color:var(--ink)}
+
+  .wm-seg{display:flex;gap:.4rem;margin:.8rem 0 1.1rem;flex-wrap:wrap}
+  .wm-seg button{font:inherit;font-size:.875rem;line-height:1.3;cursor:pointer;margin:0;padding:.45rem .7rem;border-radius:8px;border:1px solid var(--hair);background:var(--surface-2);color:var(--ink-2)}
+  .wm-seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+  .wm button:focus-visible,.wm a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  .wm-prow{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.75rem 0;border-top:1px solid var(--hair-soft)}
+  .wm-prow .lbl{font-size:.9375rem;color:var(--ink-2);line-height:1.45}
+  .wm-prow .lbl small{display:block;color:var(--muted);font-size:.8125rem;margin-top:.1rem}
+  .wm-prow b{font-size:1.125rem;font-weight:700;white-space:nowrap}
+
+  .wm-cta{margin-top:clamp(1.5rem,3vw,2.25rem);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 1.5rem;background:var(--surface);border:1px solid var(--hair);border-radius:var(--radius);padding:1.25rem 1.5rem}
+  .wm-cta p{font-size:.9375rem;color:var(--ink-2);max-width:56ch}
+  .wm-cta p strong{color:var(--ink)}
+  .wm-btn{display:inline-block;background:var(--accent);color:#fff !important;text-decoration:none;font-weight:700;padding:.75rem 1.3rem;border-radius:10px;font-size:.9375rem;white-space:nowrap}
+  .wm-btn:hover{filter:brightness(1.08)}
+  .wm-contacts{font-size:.8125rem;color:var(--muted);margin-top:1rem}
+  .wm-contacts a{color:inherit}
+</style>
+
+<div class="wm-in">
+  <div class="wm-top">
+    <a class="wm-mark" href="https://wanmo.ru">WANMO</a>
+    <a class="wm-site" href="https://wanmo.ru">wanmo.ru</a>
+  </div>
+
+  <div class="wm-head">
+    <p class="wm-eyebrow">Калькулятор расхода электроэнергии</p>
+    <h1>Электричество не влияет на экономику услуги</h1>
+    <p>Средняя потребляемая мощность чиллера — 0,68 кВт. Расчёт приведён по тарифам для юридических лиц в Москве: цена для прочих потребителей нерегулируемая и зависит от уровня напряжения и сбытовой надбавки, поэтому выберите значение, ближайшее к вашему договору энергоснабжения.</p>
+  </div>
+
+  <div class="wm-power">
+    <div class="wm-ptable" aria-live="polite">
+      <p class="wm-eyebrow">Тариф на электроэнергию</p>
+      <div class="wm-seg" id="wme-tariffSeg" role="group" aria-label="Тариф на электроэнергию">
+        <button type="button" data-v="9" aria-pressed="false">9 ₽/кВт·ч</button>
+        <button type="button" data-v="10.5" aria-pressed="true">10,5 ₽/кВт·ч</button>
+        <button type="button" data-v="12" aria-pressed="false">12 ₽/кВт·ч</button>
+      </div>
+      <div class="wm-prow">
+        <div class="lbl">Час работы<small>0,68 кВт·ч</small></div>
+        <b id="wme-hour">7,14 ₽</b>
+      </div>
+      <div class="wm-prow">
+        <div class="lbl">Сутки непрерывной работы<small>16,3 кВт·ч</small></div>
+        <b id="wme-day">171 ₽</b>
+      </div>
+      <div class="wm-prow">
+        <div class="lbl">Месяц непрерывной работы<small>490 кВт·ч за 30 суток</small></div>
+        <b id="wme-month">5 141 ₽</b>
+      </div>
+      <div class="wm-prow">
+        <div class="lbl">Месяц в режиме поддержания температуры<small>около 40 % времени под нагрузкой, 196 кВт·ч</small></div>
+        <b id="wme-month40">2 056 ₽</b>
+      </div>
+      <div class="wm-prow">
+        <div class="lbl">В пересчёте на одну сессию<small>при четырёх сессиях в день</small></div>
+        <b id="wme-perSession">43 ₽</b>
+      </div>
+    </div>
+    <div class="wm-pside">
+      <p><strong>Даже при круглосуточной работе</strong> расход электроэнергии остаётся в пределах <span id="wme-monthEcho">5 141 ₽</span> в месяц.</p>
+      <p>На фоне выручки в 600 000 ₽ при четырёх сессиях в день по 5 000 ₽ это <strong id="wme-share">0,9 %</strong>. Основную статью себестоимости услуги составляет время инструктора, а не электричество.</p>
+      <p style="color:var(--muted);font-size:.8125rem">Расчёт по средней потребляемой мощности; фактический расход зависит от температуры в помещении, объёма воды и заданной температуры протокола.</p>
+    </div>
+  </div>
+
+  <div class="wm-cta">
+    <p><strong>Посчитаем под ваш клуб.</strong> Пришлите фото или видео зоны, где может встать система, — подберём модель, схему размещения и расчёт выручки под ваш тариф.</p>
+    <a class="wm-btn" href="https://wa.me/79251431812?text=Здравствуйте!%20Интересует%20тестовое%20размещение%20ледяной%20ванны%20WANMO%20в%20клубе">Обсудить размещение</a>
+  </div>
+  <p class="wm-contacts"><a href="tel:+79251431812">+7 (925) 143-18-12</a> · <a href="https://wanmo.ru">wanmo.ru</a> · шоурум: Москва, ул. Зорге, 9А, корп. 1</p>
+</div>
+
+<script>
+(function(){
+  var DAYS = 30, KW = 0.68, tariff = 10.5;
+  function set(id, t){ document.getElementById('wme-' + id).textContent = t; }
+  function ru(n, d){
+    d = d || 0;
+    return Number(n).toLocaleString('ru-RU', {minimumFractionDigits: d, maximumFractionDigits: d});
+  }
+
+  function render(){
+    var hour = KW * tariff;
+    var day = KW * 24 * tariff;
+    var month = day * DAYS;
+    var revenueRef = 4 * DAYS * 5000;
+
+    set('hour', ru(hour, 2) + ' ₽');
+    set('day', ru(day) + ' ₽');
+    set('month', ru(month) + ' ₽');
+    set('month40', ru(month * 0.4) + ' ₽');
+    set('perSession', ru(day / 4) + ' ₽');
+    set('monthEcho', ru(month) + ' ₽');
+    set('share', ru(month / revenueRef * 100, 1) + ' %');
+  }
+
+  var box = document.getElementById('wme-tariffSeg');
+  box.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('button') : null;
+    if (!b || !box.contains(b)) return;
+    tariff = +b.getAttribute('data-v');
+    var all = box.querySelectorAll('button');
+    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === b ? 'true' : 'false');
+    render();
+  });
+  render();
+})();
+</script>
+</div>
+
+</body>
+</html>
