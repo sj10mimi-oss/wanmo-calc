@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WANMO — калькуляторы для клубов</title>
+<meta name="description" content="Калькулятор окупаемости и калькулятор расхода электроэнергии ледяной ванны WANMO.">
+<style>
+  html,body{margin:0;background:#e9eef2}
+  .wm{
+    --surface:#fff;--ink:#0b1115;--ink-2:#2b3a43;--muted:#5c6c77;--hair:#c8d5dd;--accent:#0e6a86;
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Roboto,Arial,sans-serif;
+    font-size:16px;line-height:1.6;color:var(--ink);
+    padding:clamp(1.5rem,5vw,3.5rem) 16px;-webkit-font-smoothing:antialiased;
+  }
+  .wm *{box-sizing:border-box}
+  .wm h1,.wm h2,.wm p{margin:0}
+  .wm-in{max-width:1080px;margin:0 auto}
+  .wm-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:clamp(1.5rem,4vw,2.5rem)}
+  .wm-mark{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:1.0625rem;color:var(--ink);text-decoration:none}
+  .wm-site{font-size:.875rem;color:var(--muted);text-decoration:none}
+  .wm-eyebrow{font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .wm h1{font-size:clamp(1.6rem,1.15rem + 1.6vw,2.375rem);font-weight:700;line-height:1.12;letter-spacing:-.015em;margin:.7rem 0 clamp(1.5rem,3vw,2.25rem)}
+  .wm-cards{display:grid;gap:1rem;grid-template-columns:1fr}
+  @media (min-width:720px){.wm-cards{grid-template-columns:1fr 1fr}}
+  .wm-card{display:flex;flex-direction:column;gap:.6rem;background:var(--surface);border:1px solid var(--hair);border-radius:14px;padding:1.4rem 1.5rem;text-decoration:none;color:inherit}
+  .wm-card:hover{border-color:var(--accent)}
+  .wm-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .wm-card h2{font-size:1.25rem;font-weight:700;line-height:1.25}
+  .wm-card p{font-size:.9375rem;color:var(--ink-2)}
+  .wm-go{margin-top:auto;padding-top:.4rem;font-weight:700;font-size:.9375rem;color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wm">
+  <div class="wm-in">
+    <div class="wm-top">
+      <a class="wm-mark" href="https://wanmo.ru">WANMO</a>
+      <a class="wm-site" href="https://wanmo.ru">wanmo.ru</a>
+    </div>
+    <p class="wm-eyebrow">Для клубов и студий</p>
+    <h1>Калькуляторы ледяной ванны WANMO</h1>
+    <div class="wm-cards">
+      <a class="wm-card" href="okupaemost/">
+        <h2>Окупаемость</h2>
+        <p>Выручка, операционные расходы, ставка размещения и точка безубыточности — под ваш тариф и загрузку.</p>
+        <span class="wm-go">Открыть калькулятор →</span>
+      </a>
+      <a class="wm-card" href="elektrichestvo/">
+        <h2>Расход электроэнергии</h2>
+        <p>Сколько стоит работа чиллера в час, сутки и месяц и сколько это на одну сессию.</p>
+        <span class="wm-go">Открыть калькулятор →</span>
+      </a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
