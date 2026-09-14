@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WANMO — калькулятор окупаемости ледяной ванны</title>
+<meta name="description" content="Расчёт выручки и точки безубыточности ледяной ванны WANMO в клубе.">
+<style>html,body{margin:0;background:#e9eef2}</style>
+</head>
+<body>
+
+<div class="wm" id="wm-roi">
+<style>
+  .wm{
+    --ground:#e9eef2;--surface:#fff;--surface-2:#f4f7f9;
+    --ink:#0b1115;--ink-2:#2b3a43;--muted:#5c6c77;
+    --hair:#c8d5dd;--hair-soft:#dde6eb;
+    --accent:#0e6a86;--accent-ink:#fff;
+    --dark:#0b1115;--dark-ink:#eef4f7;--dark-muted:#8fa3ae;--dark-hair:#2a3841;
+    --radius:14px;
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Roboto,Arial,sans-serif;
+    font-size:16px;line-height:1.6;color:var(--ink);background:var(--ground);
+    padding:clamp(1.5rem,5vw,3.5rem) 16px;text-align:left;
+    -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+  }
+  .wm *,.wm *::before,.wm *::after{box-sizing:border-box}
+  .wm h1,.wm p{margin:0}
+  .wm-in{max-width:1080px;margin:0 auto}
+
+  .wm-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:clamp(1.5rem,4vw,2.5rem)}
+  .wm-mark{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:1.0625rem;color:var(--ink);text-decoration:none}
+  .wm-site{font-size:.875rem;color:var(--muted);text-decoration:none}
+  .wm-eyebrow{font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+  .wm-head{display:flex;flex-direction:column;gap:.7rem;margin-bottom:clamp(1.5rem,3vw,2.25rem)}
+  .wm-head h1{font-size:clamp(1.6rem,1.15rem + 1.6vw,2.375rem);font-weight:700;line-height:1.12;letter-spacing:-.015em;text-wrap:balance;color:var(--ink)}
+  .wm-head p{color:var(--muted);max-width:66ch}
+
+  .wm-calc{display:grid;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--radius);overflow:hidden;grid-template-columns:1fr}
+  @media (min-width:880px){.wm-calc{grid-template-columns:minmax(0,360px) 1fr}}
+  .wm-controls{background:var(--surface);padding:1.5rem}
+  .wm-out{background:var(--dark);color:var(--dark-ink);padding:1.5rem}
+
+  .wm-field{margin-bottom:1.5rem}
+  .wm-field:last-child{margin-bottom:0}
+  .wm-label{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .wm-label output{font-size:1.25rem;font-weight:700;color:var(--ink);text-transform:none;letter-spacing:0;white-space:nowrap}
+  .wm input[type=range]{width:100%;margin:.85rem 0 0;accent-color:var(--accent);height:1.5rem}
+  .wm-seg{display:flex;gap:.4rem;margin-top:.8rem;flex-wrap:wrap}
+  .wm-seg button{font:inherit;font-size:.875rem;line-height:1.3;cursor:pointer;margin:0;padding:.45rem .7rem;border-radius:8px;border:1px solid var(--hair);background:var(--surface-2);color:var(--ink-2)}
+  .wm-seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+  .wm button:focus-visible,.wm input:focus-visible,.wm a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  .wm-row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.7rem 0;font-size:.9375rem}
+  .wm-row + .wm-row{border-top:1px solid var(--dark-hair)}
+  .wm-row span{color:var(--dark-muted)}
+  .wm-row b{font-weight:700;font-size:1.0625rem;white-space:nowrap}
+  .wm-row.total{margin-top:.35rem;padding-top:1rem;border-top-color:#4a5c67}
+  .wm-row.total span{color:var(--dark-ink)}
+  .wm-row.total b{font-size:1.75rem;color:#fff}
+  .wm-be{margin-top:1.25rem;padding:.95rem 1.1rem;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--dark-hair);font-size:.875rem;line-height:1.55}
+  .wm-note{font-size:.8125rem;color:var(--muted);margin-top:.95rem;max-width:80ch}
+
+  .wm-cta{margin-top:clamp(1.5rem,3vw,2.25rem);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 1.5rem;background:var(--surface);border:1px solid var(--hair);border-radius:var(--radius);padding:1.25rem 1.5rem}
+  .wm-cta p{font-size:.9375rem;color:var(--ink-2);max-width:56ch}
+  .wm-cta p strong{color:var(--ink)}
+  .wm-btn{display:inline-block;background:var(--accent);color:#fff !important;text-decoration:none;font-weight:700;padding:.75rem 1.3rem;border-radius:10px;font-size:.9375rem;white-space:nowrap}
+  .wm-btn:hover{filter:brightness(1.08)}
+  .wm-contacts{font-size:.8125rem;color:var(--muted);margin-top:1rem}
+  .wm-contacts a{color:inherit}
+</style>
+
+<div class="wm-in">
+  <div class="wm-top">
+    <a class="wm-mark" href="https://wanmo.ru">WANMO</a>
+    <a class="wm-site" href="https://wanmo.ru">wanmo.ru</a>
+  </div>
+
+  <div class="wm-head">
+    <p class="wm-eyebrow">Калькулятор окупаемости · для клубов</p>
+    <h1>Стоимость размещения возвращается первыми сессиями месяца</h1>
+    <p>Сведите расчёт под свой тариф и ожидаемую загрузку. Месяц считается по 30 календарным дням; операционные расходы — доля инструктора, вода, электричество и расходные материалы — задаются отдельным ползунком.</p>
+  </div>
+
+  <div class="wm-calc">
+    <div class="wm-controls">
+      <div class="wm-field">
+        <span class="wm-label">Тариф за сессию <output id="wmr-priceOut">5 000 ₽</output></span>
+        <div class="wm-seg" id="wmr-priceSeg" role="group" aria-label="Тариф за сессию">
+          <button type="button" data-v="3000" aria-pressed="false">3 000 ₽</button>
+          <button type="button" data-v="4000" aria-pressed="false">4 000 ₽</button>
+          <button type="button" data-v="5000" aria-pressed="true">5 000 ₽</button>
+          <button type="button" data-v="6000" aria-pressed="false">6 000 ₽</button>
+        </div>
+      </div>
+      <div class="wm-field">
+        <label class="wm-label" for="wmr-perday">Сессий в день <output id="wmr-perdayOut" for="wmr-perday">4</output></label>
+        <input type="range" id="wmr-perday" min="1" max="10" step="1" value="4">
+      </div>
+      <div class="wm-field">
+        <label class="wm-label" for="wmr-opex">Операционные расходы <output id="wmr-opexOut" for="wmr-opex">50 %</output></label>
+        <input type="range" id="wmr-opex" min="0" max="70" step="5" value="50">
+      </div>
+      <div class="wm-field">
+        <span class="wm-label">Ставка размещения <output id="wmr-rentOut">45 000 ₽</output></span>
+        <div class="wm-seg" id="wmr-rentSeg" role="group" aria-label="Ставка размещения">
+          <button type="button" data-v="45000" aria-pressed="true">ELEMENT / BALANCE</button>
+          <button type="button" data-v="50000" aria-pressed="false">PRIME</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wm-out" aria-live="polite">
+      <p class="wm-eyebrow" style="color:var(--dark-muted)">Результат за месяц</p>
+      <div class="wm-row"><span>Сессий в месяц</span><b id="wmr-sessions">120</b></div>
+      <div class="wm-row"><span>Выручка</span><b id="wmr-revenue">600 000 ₽</b></div>
+      <div class="wm-row"><span>Операционные расходы</span><b id="wmr-opexRub">− 300 000 ₽</b></div>
+      <div class="wm-row"><span>Размещение системы WANMO</span><b id="wmr-rent">− 45 000 ₽</b></div>
+      <div class="wm-row total"><span>Остаётся клубу</span><b id="wmr-profit">255 000 ₽</b></div>
+      <div class="wm-be">
+        Размещение занимает <b id="wmr-share">7,5 %</b> выручки. Точка безубыточности — <b id="wmr-be">18</b> сессий в месяц; всё, что проведено сверх этого, работает в плюс.
+      </div>
+    </div>
+  </div>
+  <p class="wm-note">Расчёт ориентировочный: фактическая загрузка зависит от формата клуба, тарифа и того, насколько удачно услуга встроена в расписание.</p>
+
+  <div class="wm-cta">
+    <p><strong>Посчитаем под ваш клуб.</strong> Пришлите фото или видео зоны, где может встать система, — подберём модель, схему размещения и расчёт выручки под ваш тариф.</p>
+    <a class="wm-btn" href="https://wa.me/79251431812?text=Здравствуйте!%20Интересует%20тестовое%20размещение%20ледяной%20ванны%20WANMO%20в%20клубе">Обсудить размещение</a>
+  </div>
+  <p class="wm-contacts"><a href="tel:+79251431812">+7 (925) 143-18-12</a> · <a href="https://wanmo.ru">wanmo.ru</a> · шоурум: Москва, ул. Зорге, 9А, корп. 1</p>
+</div>
+
+<script>
+(function(){
+  var DAYS = 30, price = 5000, rent = 45000;
+  function el(id){ return document.getElementById('wmr-' + id); }
+  function set(id, t){ el(id).textContent = t; }
+  function ru(n, d){
+    d = d || 0;
+    return Number(n).toLocaleString('ru-RU', {minimumFractionDigits: d, maximumFractionDigits: d});
+  }
+  var perday = el('perday'), opex = el('opex');
+
+  function render(){
+    var pd = +perday.value, op = +opex.value;
+    var sessions = pd * DAYS;
+    var revenue = sessions * price;
+    var opexRub = revenue * op / 100;
+    var profit = revenue - opexRub - rent;
+    var margin = price * (1 - op / 100);
+    var be = margin > 0 ? Math.ceil(rent / margin) : 0;
+
+    set('priceOut', ru(price) + ' ₽');
+    set('rentOut', ru(rent) + ' ₽');
+    set('perdayOut', pd);
+    set('opexOut', op + ' %');
+    set('sessions', ru(sessions));
+    set('revenue', ru(revenue) + ' ₽');
+    set('opexRub', '− ' + ru(opexRub) + ' ₽');
+    set('rent', '− ' + ru(rent) + ' ₽');
+    set('profit', (profit < 0 ? '− ' : '') + ru(Math.abs(profit)) + ' ₽');
+    set('share', ru(rent / revenue * 100, 1) + ' %');
+    set('be', be > 0 ? ru(be) : '—');
+  }
+
+  function seg(id, apply){
+    var box = el(id);
+    box.addEventListener('click', function(e){
+      var b = e.target.closest ? e.target.closest('button') : null;
+      if (!b || !box.contains(b)) return;
+      apply(+b.getAttribute('data-v'));
+      var all = box.querySelectorAll('button');
+      for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === b ? 'true' : 'false');
+      render();
+    });
+  }
+
+  seg('priceSeg', function(v){ price = v; });
+  seg('rentSeg', function(v){ rent = v; });
+  perday.addEventListener('input', render);
+  opex.addEventListener('input', render);
+  render();
+})();
+</script>
+</div>
+
+</body>
+</html>
