@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WANMO — калькулятор окупаемости ледяной ванны</title>
 <meta name="description" content="Расчёт выручки и точки безубыточности ледяной ванны WANMO в клубе.">
+<link rel="stylesheet" href="../fonts/fonts.css">
 <style>html,body{margin:0;background:#e9eef2}</style>
 </head>
 <body>
@@ -18,7 +19,9 @@
     --accent:#0e6a86;--accent-ink:#fff;
     --dark:#0b1115;--dark-ink:#eef4f7;--dark-muted:#8fa3ae;--dark-hair:#2a3841;
     --radius:14px;
-    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Roboto,Arial,sans-serif;
+    --sans:"Manrope","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    --display:"Unbounded","Manrope","Segoe UI",-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+    font-family:var(--sans);
     font-size:16px;line-height:1.6;color:var(--ink);background:var(--ground);
     padding:clamp(1.5rem,5vw,3.5rem) 16px;text-align:left;
     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
@@ -28,26 +31,37 @@
   .wm-in{max-width:1080px;margin:0 auto}
 
   .wm-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:clamp(1.5rem,4vw,2.5rem)}
-  .wm-mark{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:1.0625rem;color:var(--ink);text-decoration:none}
+  .wm-mark{font-family:var(--display);font-weight:700;letter-spacing:.06em;font-size:.9375rem;text-transform:uppercase;color:var(--ink);text-decoration:none}
   .wm-site{font-size:.875rem;color:var(--muted);text-decoration:none}
   .wm-eyebrow{font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
 
-  .wm-head{display:flex;flex-direction:column;gap:.7rem;margin-bottom:clamp(1.5rem,3vw,2.25rem)}
-  .wm-head h1{font-size:clamp(1.6rem,1.15rem + 1.6vw,2.375rem);font-weight:700;line-height:1.12;letter-spacing:-.015em;text-wrap:balance;color:var(--ink)}
+  .wm-head{display:flex;flex-direction:column;gap:.85rem;margin-bottom:clamp(1.5rem,3vw,2.25rem)}
+  .wm-head h1{font-family:var(--display);font-size:clamp(1.3rem,.95rem + 1.35vw,1.95rem);font-weight:700;line-height:1.25;letter-spacing:-.01em;text-wrap:balance;color:var(--ink)}
   .wm-head p{color:var(--muted);max-width:66ch}
 
   .wm-calc{display:grid;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--radius);overflow:hidden;grid-template-columns:1fr}
-  @media (min-width:880px){.wm-calc{grid-template-columns:minmax(0,360px) 1fr}}
+  @media (min-width:880px){.wm-calc{grid-template-columns:minmax(0,380px) 1fr}}
   .wm-controls{background:var(--surface);padding:1.5rem}
   .wm-out{background:var(--dark);color:var(--dark-ink);padding:1.5rem}
 
-  .wm-field{margin-bottom:1.5rem}
+  .wm-field{margin-bottom:1.6rem}
   .wm-field:last-child{margin-bottom:0}
   .wm-label{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
   .wm-label output{font-size:1.25rem;font-weight:700;color:var(--ink);text-transform:none;letter-spacing:0;white-space:nowrap}
+  .wm-hint{font-size:.8125rem;line-height:1.5;color:var(--muted);margin-top:.55rem}
+  .wm-hint strong{color:var(--ink-2)}
+
+  .wm-num{display:flex;align-items:baseline;gap:.4rem;margin-top:.7rem;padding:.55rem .85rem;border:1px solid var(--hair);border-radius:8px;background:var(--surface-2)}
+  .wm-num:focus-within{border-color:var(--accent);box-shadow:0 0 0 2px rgba(14,106,134,.15)}
+  .wm-num input{flex:1;min-width:0;border:0;padding:0;background:transparent;font:inherit;font-size:1.375rem;font-weight:700;color:var(--ink)}
+  .wm-num input:focus{outline:none}
+  .wm-num input::-webkit-outer-spin-button,.wm-num input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .wm-num input[type=number]{-moz-appearance:textfield}
+  .wm-num span{font-size:1.125rem;font-weight:700;color:var(--muted)}
+
   .wm input[type=range]{width:100%;margin:.85rem 0 0;accent-color:var(--accent);height:1.5rem}
-  .wm-seg{display:flex;gap:.4rem;margin-top:.8rem;flex-wrap:wrap}
-  .wm-seg button{font:inherit;font-size:.875rem;line-height:1.3;cursor:pointer;margin:0;padding:.45rem .7rem;border-radius:8px;border:1px solid var(--hair);background:var(--surface-2);color:var(--ink-2)}
+  .wm-seg{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+  .wm-seg button{font:inherit;font-size:.875rem;line-height:1.3;cursor:pointer;margin:0;padding:.4rem .65rem;border-radius:8px;border:1px solid var(--hair);background:var(--surface-2);color:var(--ink-2)}
   .wm-seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
   .wm button:focus-visible,.wm input:focus-visible,.wm a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
@@ -79,28 +93,37 @@
   <div class="wm-head">
     <p class="wm-eyebrow">Калькулятор окупаемости · для клубов</p>
     <h1>Стоимость размещения возвращается первыми сессиями месяца</h1>
-    <p>Сведите расчёт под свой тариф и ожидаемую загрузку. Месяц считается по 30 календарным дням; операционные расходы — доля инструктора, вода, электричество и расходные материалы — задаются отдельным ползунком.</p>
+    <p>Сведите расчёт под свой тариф и ожидаемую загрузку. Месяц считается по 30 календарным дням.</p>
   </div>
 
   <div class="wm-calc">
     <div class="wm-controls">
       <div class="wm-field">
-        <span class="wm-label">Тариф за сессию <output id="wmr-priceOut">5 000 ₽</output></span>
-        <div class="wm-seg" id="wmr-priceSeg" role="group" aria-label="Тариф за сессию">
-          <button type="button" data-v="3000" aria-pressed="false">3 000 ₽</button>
-          <button type="button" data-v="4000" aria-pressed="false">4 000 ₽</button>
-          <button type="button" data-v="5000" aria-pressed="true">5 000 ₽</button>
-          <button type="button" data-v="6000" aria-pressed="false">6 000 ₽</button>
+        <label class="wm-label" for="wmr-price">Тариф за сессию</label>
+        <div class="wm-num">
+          <input type="number" id="wmr-price" value="5000" min="0" max="200000" step="100" inputmode="numeric" aria-describedby="wmr-priceHint">
+          <span>₽</span>
         </div>
+        <div class="wm-seg" id="wmr-priceSeg" role="group" aria-label="Быстрый выбор тарифа">
+          <button type="button" data-v="2000" aria-pressed="false">2 000</button>
+          <button type="button" data-v="3000" aria-pressed="false">3 000</button>
+          <button type="button" data-v="4000" aria-pressed="false">4 000</button>
+          <button type="button" data-v="5000" aria-pressed="true">5 000</button>
+        </div>
+        <p class="wm-hint" id="wmr-priceHint">Впишите свой тариф — кнопки рядом просто подставляют частые значения.</p>
       </div>
+
       <div class="wm-field">
         <label class="wm-label" for="wmr-perday">Сессий в день <output id="wmr-perdayOut" for="wmr-perday">4</output></label>
         <input type="range" id="wmr-perday" min="1" max="10" step="1" value="4">
       </div>
+
       <div class="wm-field">
         <label class="wm-label" for="wmr-opex">Операционные расходы <output id="wmr-opexOut" for="wmr-opex">50 %</output></label>
-        <input type="range" id="wmr-opex" min="0" max="70" step="5" value="50">
+        <input type="range" id="wmr-opex" min="0" max="70" step="5" value="50" aria-describedby="wmr-opexHint">
+        <p class="wm-hint" id="wmr-opexHint"><strong>Что сюда входит:</strong> оплата времени инструктора, вода и подготовка ванны, электроэнергия, фильтры и расходные материалы, уборка и обработка зоны. Ставка размещения WANMO сюда не входит — она считается отдельной строкой.</p>
       </div>
+
       <div class="wm-field">
         <span class="wm-label">Ставка размещения <output id="wmr-rentOut">45 000 ₽</output></span>
         <div class="wm-seg" id="wmr-rentSeg" role="group" aria-label="Ставка размещения">
@@ -126,32 +149,44 @@
 
   <div class="wm-cta">
     <p><strong>Посчитаем под ваш клуб.</strong> Пришлите фото или видео зоны, где может встать система, — подберём модель, схему размещения и расчёт выручки под ваш тариф.</p>
-    <a class="wm-btn" href="https://wa.me/79251431812?text=Здравствуйте!%20Интересует%20тестовое%20размещение%20ледяной%20ванны%20WANMO%20в%20клубе">Обсудить размещение</a>
+    <a class="wm-btn" href="https://t.me/Wanmo_Wanmo">Обсудить в Telegram</a>
   </div>
-  <p class="wm-contacts"><a href="tel:+79251431812">+7 (925) 143-18-12</a> · <a href="https://wanmo.ru">wanmo.ru</a> · шоурум: Москва, ул. Зорге, 9А, корп. 1</p>
+  <p class="wm-contacts"><a href="https://t.me/Wanmo_Wanmo">@Wanmo_Wanmo</a> · <a href="tel:+79251431812">+7 (925) 143-18-12</a> · <a href="https://wanmo.ru">wanmo.ru</a> · шоурум: Москва, ул. Зорге, 9А, корп. 1</p>
 </div>
 
 <script>
 (function(){
-  var DAYS = 30, price = 5000, rent = 45000;
+  var DAYS = 30, rent = 45000;
   function el(id){ return document.getElementById('wmr-' + id); }
   function set(id, t){ el(id).textContent = t; }
   function ru(n, d){
     d = d || 0;
     return Number(n).toLocaleString('ru-RU', {minimumFractionDigits: d, maximumFractionDigits: d});
   }
-  var perday = el('perday'), opex = el('opex');
+  var priceInput = el('price'), perday = el('perday'), opex = el('opex');
+  var priceSeg = el('priceSeg'), rentSeg = el('rentSeg');
+
+  function price(){
+    var v = parseFloat(priceInput.value);
+    return isFinite(v) && v > 0 ? v : 0;
+  }
+
+  function syncPresets(){
+    var p = price(), all = priceSeg.querySelectorAll('button');
+    for (var i = 0; i < all.length; i++){
+      all[i].setAttribute('aria-pressed', +all[i].getAttribute('data-v') === p ? 'true' : 'false');
+    }
+  }
 
   function render(){
-    var pd = +perday.value, op = +opex.value;
+    var p = price(), pd = +perday.value, op = +opex.value;
     var sessions = pd * DAYS;
-    var revenue = sessions * price;
+    var revenue = sessions * p;
     var opexRub = revenue * op / 100;
     var profit = revenue - opexRub - rent;
-    var margin = price * (1 - op / 100);
+    var margin = p * (1 - op / 100);
     var be = margin > 0 ? Math.ceil(rent / margin) : 0;
 
-    set('priceOut', ru(price) + ' ₽');
     set('rentOut', ru(rent) + ' ₽');
     set('perdayOut', pd);
     set('opexOut', op + ' %');
@@ -160,26 +195,31 @@
     set('opexRub', '− ' + ru(opexRub) + ' ₽');
     set('rent', '− ' + ru(rent) + ' ₽');
     set('profit', (profit < 0 ? '− ' : '') + ru(Math.abs(profit)) + ' ₽');
-    set('share', ru(rent / revenue * 100, 1) + ' %');
+    set('share', revenue > 0 ? ru(rent / revenue * 100, 1) + ' %' : '—');
     set('be', be > 0 ? ru(be) : '—');
   }
 
-  function seg(id, apply){
-    var box = el(id);
-    box.addEventListener('click', function(e){
-      var b = e.target.closest ? e.target.closest('button') : null;
-      if (!b || !box.contains(b)) return;
-      apply(+b.getAttribute('data-v'));
-      var all = box.querySelectorAll('button');
-      for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === b ? 'true' : 'false');
-      render();
-    });
-  }
+  priceSeg.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('button') : null;
+    if (!b || !priceSeg.contains(b)) return;
+    priceInput.value = b.getAttribute('data-v');
+    syncPresets();
+    render();
+  });
 
-  seg('priceSeg', function(v){ price = v; });
-  seg('rentSeg', function(v){ rent = v; });
+  rentSeg.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('button') : null;
+    if (!b || !rentSeg.contains(b)) return;
+    rent = +b.getAttribute('data-v');
+    var all = rentSeg.querySelectorAll('button');
+    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === b ? 'true' : 'false');
+    render();
+  });
+
+  priceInput.addEventListener('input', function(){ syncPresets(); render(); });
   perday.addEventListener('input', render);
   opex.addEventListener('input', render);
+  syncPresets();
   render();
 })();
 </script>
