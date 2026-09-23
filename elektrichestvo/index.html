@@ -80,34 +80,34 @@
     <div class="wm-ptable" aria-live="polite">
       <p class="wm-eyebrow">Тариф на электроэнергию</p>
       <div class="wm-seg" id="wme-tariffSeg" role="group" aria-label="Тариф на электроэнергию">
-        <button type="button" data-v="9" aria-pressed="false">9 ₽/кВт·ч</button>
-        <button type="button" data-v="10.5" aria-pressed="true">10,5 ₽/кВт·ч</button>
-        <button type="button" data-v="12" aria-pressed="false">12 ₽/кВт·ч</button>
+        <button type="button" data-v="9" aria-pressed="false">9 ₽/кВт·ч</button>
+        <button type="button" data-v="10.5" aria-pressed="true">10,5 ₽/кВт·ч</button>
+        <button type="button" data-v="12" aria-pressed="false">12 ₽/кВт·ч</button>
       </div>
       <div class="wm-prow">
         <div class="lbl">Час работы<small>0,68 кВт·ч</small></div>
-        <b id="wme-hour">7,14 ₽</b>
+        <b id="wme-hour">7,14 ₽</b>
       </div>
       <div class="wm-prow">
         <div class="lbl">Сутки непрерывной работы<small>16,3 кВт·ч</small></div>
-        <b id="wme-day">171 ₽</b>
+        <b id="wme-day">171 ₽</b>
       </div>
       <div class="wm-prow">
         <div class="lbl">Месяц непрерывной работы<small>490 кВт·ч за 30 суток</small></div>
-        <b id="wme-month">5 141 ₽</b>
+        <b id="wme-month">5 141 ₽</b>
       </div>
       <div class="wm-prow">
         <div class="lbl">Месяц в режиме поддержания температуры<small>около 40 % времени под нагрузкой, 196 кВт·ч</small></div>
-        <b id="wme-month40">2 056 ₽</b>
+        <b id="wme-month40">2 056 ₽</b>
       </div>
       <div class="wm-prow">
         <div class="lbl">В пересчёте на одну сессию<small>при четырёх сессиях в день</small></div>
-        <b id="wme-perSession">43 ₽</b>
+        <b id="wme-perSession">43 ₽</b>
       </div>
     </div>
     <div class="wm-pside">
-      <p><strong>Даже при круглосуточной работе</strong> расход электроэнергии остаётся в пределах <span id="wme-monthEcho">5 141 ₽</span> в месяц.</p>
-      <p>На фоне выручки в 600 000 ₽ при четырёх сессиях в день по 5 000 ₽ это <strong id="wme-share">0,9 %</strong>. Основную статью себестоимости услуги составляет время инструктора, а не электричество.</p>
+      <p><strong>Даже при круглосуточной работе</strong> расход электроэнергии остаётся в пределах <span id="wme-monthEcho">5 141 ₽</span> в месяц.</p>
+      <p>На фоне выручки в 600 000 ₽ при четырёх сессиях в день по 5 000 ₽ это <strong id="wme-share">0,9 %</strong>. Основную статью себестоимости услуги составляет время инструктора, а не электричество.</p>
       <p style="color:var(--muted);font-size:.8125rem">Расчёт по средней потребляемой мощности; фактический расход зависит от температуры в помещении, объёма воды и заданной температуры протокола.</p>
     </div>
   </div>
@@ -134,12 +134,12 @@
     var month = day * DAYS;
     var revenueRef = 4 * DAYS * 5000;
 
-    set('hour', ru(hour, 2) + ' ₽');
-    set('day', ru(day) + ' ₽');
-    set('month', ru(month) + ' ₽');
-    set('month40', ru(month * 0.4) + ' ₽');
-    set('perSession', ru(day / 4) + ' ₽');
-    set('monthEcho', ru(month) + ' ₽');
+    set('hour', ru(hour, 2) + ' ₽');
+    set('day', ru(day) + ' ₽');
+    set('month', ru(month) + ' ₽');
+    set('month40', ru(month * 0.4) + ' ₽');
+    set('perSession', ru(day / 4) + ' ₽');
+    set('monthEcho', ru(month) + ' ₽');
     set('share', ru(month / revenueRef * 100, 1) + ' %');
   }
 
