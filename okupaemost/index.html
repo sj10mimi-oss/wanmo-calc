@@ -125,7 +125,7 @@
       </div>
 
       <div class="wm-field">
-        <span class="wm-label">Ставка размещения <output id="wmr-rentOut">45 000 ₽</output></span>
+        <span class="wm-label">Ставка размещения <output id="wmr-rentOut">45 000 ₽</output></span>
         <div class="wm-seg" id="wmr-rentSeg" role="group" aria-label="Ставка размещения">
           <button type="button" data-v="45000" aria-pressed="true">ELEMENT / BALANCE</button>
           <button type="button" data-v="50000" aria-pressed="false">PRIME</button>
@@ -136,10 +136,10 @@
     <div class="wm-out" aria-live="polite">
       <p class="wm-eyebrow" style="color:var(--dark-muted)">Результат за месяц</p>
       <div class="wm-row"><span>Сессий в месяц</span><b id="wmr-sessions">120</b></div>
-      <div class="wm-row"><span>Выручка</span><b id="wmr-revenue">600 000 ₽</b></div>
-      <div class="wm-row"><span>Операционные расходы</span><b id="wmr-opexRub">− 300 000 ₽</b></div>
-      <div class="wm-row"><span>Размещение системы WANMO</span><b id="wmr-rent">− 45 000 ₽</b></div>
-      <div class="wm-row total"><span>Остаётся клубу</span><b id="wmr-profit">255 000 ₽</b></div>
+      <div class="wm-row"><span>Выручка</span><b id="wmr-revenue">600 000 ₽</b></div>
+      <div class="wm-row"><span>Операционные расходы</span><b id="wmr-opexRub">− 300 000 ₽</b></div>
+      <div class="wm-row"><span>Размещение системы WANMO</span><b id="wmr-rent">− 45 000 ₽</b></div>
+      <div class="wm-row total"><span>Остаётся клубу</span><b id="wmr-profit">255 000 ₽</b></div>
       <div class="wm-be">
         Размещение занимает <b id="wmr-share">7,5 %</b> выручки. Точка безубыточности — <b id="wmr-be">18</b> сессий в месяц; всё, что проведено сверх этого, работает в плюс.
       </div>
@@ -187,14 +187,14 @@
     var margin = p * (1 - op / 100);
     var be = margin > 0 ? Math.ceil(rent / margin) : 0;
 
-    set('rentOut', ru(rent) + ' ₽');
+    set('rentOut', ru(rent) + ' ₽');
     set('perdayOut', pd);
     set('opexOut', op + ' %');
     set('sessions', ru(sessions));
-    set('revenue', ru(revenue) + ' ₽');
-    set('opexRub', '− ' + ru(opexRub) + ' ₽');
-    set('rent', '− ' + ru(rent) + ' ₽');
-    set('profit', (profit < 0 ? '− ' : '') + ru(Math.abs(profit)) + ' ₽');
+    set('revenue', ru(revenue) + ' ₽');
+    set('opexRub', '− ' + ru(opexRub) + ' ₽');
+    set('rent', '− ' + ru(rent) + ' ₽');
+    set('profit', (profit < 0 ? '− ' : '') + ru(Math.abs(profit)) + ' ₽');
     set('share', revenue > 0 ? ru(rent / revenue * 100, 1) + ' %' : '—');
     set('be', be > 0 ? ru(be) : '—');
   }
