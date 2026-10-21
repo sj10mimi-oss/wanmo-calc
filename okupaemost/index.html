@@ -63,6 +63,8 @@
   .wm-seg{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
   .wm-seg button{font:inherit;font-size:.875rem;line-height:1.3;cursor:pointer;margin:0;padding:.4rem .65rem;border-radius:8px;border:1px solid var(--hair);background:var(--surface-2);color:var(--ink-2)}
   .wm-seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+  #wmr-rentSeg button{text-align:left}
+  #wmr-rentSeg button i{display:block;font-style:normal;font-size:.75rem;font-weight:400;opacity:.72;margin-top:.1rem;white-space:nowrap}
   .wm button:focus-visible,.wm input:focus-visible,.wm a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
   .wm-row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.7rem 0;font-size:.9375rem}
@@ -127,8 +129,10 @@
       <div class="wm-field">
         <span class="wm-label">Ставка размещения <output id="wmr-rentOut">45 000 ₽</output></span>
         <div class="wm-seg" id="wmr-rentSeg" role="group" aria-label="Ставка размещения">
-          <button type="button" data-v="45000" aria-pressed="true">ELEMENT / BALANCE</button>
-          <button type="button" data-v="50000" aria-pressed="false">PRIME</button>
+          <button type="button" data-v="25000" aria-pressed="false">PRISMA + ULTRA<i>25 000 ₽</i></button>
+          <button type="button" data-v="35000" aria-pressed="false">OCTAGON + ULTRA<i>35 000 ₽</i></button>
+          <button type="button" data-v="45000" aria-pressed="true">ELEMENT / BALANCE<i>45 000 ₽</i></button>
+          <button type="button" data-v="50000" aria-pressed="false">PRIME<i>50 000 ₽</i></button>
         </div>
       </div>
     </div>
